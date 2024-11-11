@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<title>XSS Ranjivost</title>
+</head>
+<body>
+  <h1>Cross-site scripting (XSS)</h1>
+  <form action="/xss" method="POST">
+    <label for="comment">Poruka:</label>
+    <input type="text" id="comment" name="comment">
+    <button type="submit">Spremi podatke</button>
+  </form>
+
+  <h2>Poruke:</h2>
+  <div id="comments"></div>
+
+  <script>
+    // Prikazivanje komentara iz localStorage
+    const commentsDiv = document.getElementById('comments');
+    const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+    comments.forEach(comment => {
+      const p = document.createElement('p');
+      p.innerHTML = comment;
+      commentsDiv.appendChild(p);
+    });
+  </script>
+</body>
+</html>
